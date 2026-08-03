@@ -24,27 +24,45 @@
   /* ---------- 数据 ---------- */
   var ARTICLES = (window.ARTICLES && window.ARTICLES.articles) || [];
 
-  /* ---------- 渲染文章卡片 ---------- */
+  /* ---------- 渲染文章卡片(按分类分组) ---------- */
   var grid = document.getElementById('cardGrid');
+  function cardHTML(a) {
+    var cover = a.cover || {};
+    return (
+      '<article class="card" tabindex="0" role="button" data-id="' + esc(a.id) + '" aria-label="查看全文:' + esc(a.title) + '">' +
+        '<div class="card__cover"><img src="' + esc(cover.src || PLACEHOLDER) + '" alt="' + esc(cover.alt || a.title || '') + '" loading="lazy"></div>' +
+        '<div class="card__body">' +
+          '<div class="card__meta"><span class="card__tag">' + esc(a.category || '文章') + '</span><time>' + esc(a.date || '') + '</time></div>' +
+          '<h3 class="card__title">' + esc(a.title) + '</h3>' +
+          '<p class="card__excerpt">' + esc(a.excerpt || '') + '</p>' +
+          '<span class="card__more">READ MORE →</span>' +
+        '</div>' +
+      '</article>'
+    );
+  }
   function renderCards() {
     if (!grid) return;
     if (!ARTICLES.length) {
       grid.innerHTML = '<p class="empty">文章整理中,敬请期待。</p>';
       return;
     }
-    grid.innerHTML = ARTICLES.map(function (a) {
-      var cover = a.cover || {};
-      return (
-        '<article class="card" tabindex="0" role="button" data-id="' + esc(a.id) + '" aria-label="查看全文:' + esc(a.title) + '">' +
-          '<div class="card__cover"><img src="' + esc(cover.src || PLACEHOLDER) + '" alt="' + esc(cover.alt || a.title || '') + '" loading="lazy"></div>' +
-          '<div class="card__body">' +
-            '<div class="card__meta"><span class="card__tag">' + esc(a.category || '文章') + '</span><time>' + esc(a.date || '') + '</time></div>' +
-            '<h3 class="card__title">' + esc(a.title) + '</h3>' +
-            '<p class="card__excerpt">' + esc(a.excerpt || '') + '</p>' +
-            '<span class="card__more">READ MORE →</span>' +
-          '</div>' +
-        '</article>'
-      );
+    // 按 category 分组,保持原顺序
+    var groups = [];
+    ARTICLES.forEach(function (a) {
+      var cat = a.category || '文章';
+      var g = null;
+      for (var i = 0; i < groups.length; i++) { if (groups[i].category === cat) { g = groups[i]; break; } }
+      if (!g) { g = { category: cat, articles: [] }; groups.push(g); }
+      g.articles.push(a);
+    });
+
+    grid.innerHTML = groups.map(function (g) {
+      return '<div class="card-group">' +
+        '<h3 class="group-title">' + esc(g.category) +
+          '<span class="group-count">' + g.articles.length + '</span>' +
+        '</h3>' +
+        '<div class="card-grid">' + g.articles.map(cardHTML).join('') + '</div>' +
+      '</div>';
     }).join('');
 
     Array.prototype.forEach.call(grid.querySelectorAll('.card__cover img'), guardImg);

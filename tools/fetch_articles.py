@@ -22,6 +22,7 @@
 import argparse
 import gzip
 import hashlib
+import html
 import io
 import json
 import re
@@ -50,8 +51,10 @@ except ImportError:
         ENGINE = "requests"
     except ImportError:
         import urllib.request
-        from html.parser import HTMLParser
         ENGINE = "stdlib"
+
+# HTMLParser 是标准库,无条件导入(_StdlibExtractor 类始终存在)
+from html.parser import HTMLParser
 
 
 # ============================================================
@@ -83,10 +86,10 @@ def fetch(url: str) -> str:
             return raw.decode(enc, errors="replace")
 
 
-def download_img(url: str, dest: Path) -> bool:
-    """下载图片到 dest,成功返回 True。失败静默返回 False(调用方回落远程 URL)。"""
+def download_img(url: str, dest: Path):
+    """下载图片到 dest。成功返回最终路径(带扩展名),失败返回 None(调用方回落远程 URL)。"""
     if not url or url.startswith("data:"):
-        return False
+        return None
     dest.parent.mkdir(parents=True, exist_ok=True)
     try:
         if ENGINE in ("bs4", "requests"):
@@ -101,9 +104,9 @@ def download_img(url: str, dest: Path) -> bool:
         ext = guess_ext(raw, url)
         target = dest.with_suffix(ext)
         target.write_bytes(raw)
-        return True
+        return target
     except Exception:
-        return False
+        return None
 
 
 def guess_ext(raw: bytes, url: str) -> str:
@@ -130,7 +133,42 @@ def guess_ext(raw: bytes, url: str) -> str:
 #  解析层
 # ============================================================
 def _clean_text(s: str) -> str:
-    return re.sub(r"\s+", " ", s or "").strip()
+    return re.sub(r"\s+", " ", html.unescape(s or "")).strip()
+
+
+# 公众号/博客常见页脚噪音
+NOISE_RE = re.compile(
+    r"(点击阅读原文|阅读原文|微信扫一扫|扫码|长按识别|"
+    r"下载.{0,15}(票神|APP|软件|客户端)|领取.{0,12}优惠券|"
+    r"—————|—{2,}end|end.{0,2}—{0,2}end|"
+    r"关注该公众号|使用完整服务|作者头像|赞赏|推荐阅读|"
+    r"图\s*[/|:]\s*片|图\s*片\s*[/|·、:]|编\s*辑|策划\s*[/|·、:]|"
+    r"点个.{0,4}(在看|赞)|欢迎分享|长按.{0,6}(二维码|识别)|"
+    r"关注.{0,12}(票神|公众号|账号))", re.I)
+
+NOISE_IMG_RE = re.compile(r"(作者头像|cover_image|头像|二维码|qrcode|logo)", re.I)
+
+
+def clean_noise(blocks):
+    """过滤页脚噪音文本块与尾部噪音图片。"""
+    cleaned = []
+    for b in blocks:
+        if b["type"] in ("p", "h2", "blockquote"):
+            if NOISE_RE.search(b.get("text", "")):
+                continue
+            cleaned.append(b)
+        elif b["type"] == "img":
+            if NOISE_IMG_RE.search(b.get("alt", "") or ""):
+                continue
+            cleaned.append(b)
+    # 截断:最后一个有意义的文本块之后的图片(尾部二维码/头像)全部去掉
+    last_text = -1
+    for i, b in enumerate(cleaned):
+        if b["type"] in ("p", "h2", "blockquote"):
+            last_text = i
+    if 0 <= last_text < len(cleaned) - 1:
+        cleaned = cleaned[: last_text + 1]
+    return cleaned
 
 
 def extract_meta_bs4(soup, html_text):
@@ -290,8 +328,10 @@ def make_id(url, title):
         base = m.group(1)
     else:
         base = time_today().replace("-", "")
-    slug = re.sub(r"[^a-z0-9]", "", title[:20].lower()) or "article"
-    return f"{base}-{slug[:24]}"
+    # 用 URL 最后一段作为 slug,保证唯一(中文标题会退化为空,故优先 URL)
+    seg = [s for s in urlparse(url).path.split("/") if s]
+    slug = re.sub(r"[^a-zA-Z0-9_-]", "", seg[-1] if seg else "") or "article"
+    return f"{base}-{slug[:40]}"
 
 
 def abs_url(base, src):
@@ -332,32 +372,34 @@ def scrape(url: str, category="", source_name=""):
     art_id = make_id(url, title)
     print(f"[3/4] 下载图片 → images/articles/ ...")
     cover_src = abs_url(base, meta["image"]) if meta["image"] else ""
-    cover_path = IMGD / f"{art_id}_cover"
-    if cover_src and download_img(cover_src, cover_path):
-        cover_file = f"images/articles/{cover_path.name}{cover_path.suffix}"
-        print("      封面 ✓")
-    else:
-        cover_file = ""
-        if cover_src:
-            print("      封面下载失败,回落远程 URL")
+    cover_file = ""
+    if cover_src:
+        cover_final = download_img(cover_src, IMGD / f"{art_id}_cover")
+        if cover_final and cover_final.stat().st_size >= 2000:
+            cover_file = f"images/articles/{cover_final.name}"
+            print("      封面 ✓")
+        else:
+            print("      封面下载失败/过小,回落远程 URL")
 
     new_blocks = []
     img_idx = 1
     for b in blocks:
         if b["type"] == "img":
             src = abs_url(base, b["src"])
-            local = IMGD / f"{art_id}_img_{img_idx}"
-            if download_img(src, local):
-                new_blocks.append({**b, "src": f"images/articles/{local.name}{local.suffix}"})
+            final = download_img(src, IMGD / f"{art_id}_img_{img_idx}")
+            if final and final.stat().st_size >= 2000:
+                new_blocks.append({**b, "src": f"images/articles/{final.name}"})
                 img_idx += 1
             else:
-                new_blocks.append({**b, "src": src})  # 回落远程
+                print("      跳过 1 张图片(下载失败或过小)")
         else:
             new_blocks.append(b)
 
+    new_blocks = clean_noise(new_blocks)
+
     excerpt = meta["description"] or ""
-    if not excerpt:
-        first_p = next((b["text"] for b in blocks if b["type"] == "p"), "")
+    if not excerpt or len(excerpt) < 6:
+        first_p = next((b["text"] for b in new_blocks if b["type"] == "p"), "")
         excerpt = first_p[:60]
 
     article = {

@@ -246,8 +246,22 @@ section{ scroll-margin-top:88px; }
 .btn__arrow{ font-family:var(--font-latin); font-style:italic; }
 
 /* ---------- 文章卡片网格 ---------- */
+.card-group + .card-group{ margin-top:24px; }
+.group-title{
+  margin:0 0 8px;
+  font-size:clamp(1.25rem, 3vw, 1.7rem);
+  font-weight:600; letter-spacing:.12em; line-height:1.4;
+  display:flex; align-items:center; gap:16px;
+}
+.group-title::after{
+  content:""; flex:1; height:1px; background:var(--line);
+}
+.group-count{
+  font:italic 400 .82rem/1 var(--font-latin);
+  letter-spacing:.14em; color:var(--gold);
+}
 .card-grid{
-  margin-top:48px;
+  margin-top:32px;
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
   gap:28px;
