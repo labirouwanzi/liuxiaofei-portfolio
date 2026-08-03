@@ -370,6 +370,17 @@ def scrape(url: str, category="", source_name=""):
         return build_placeholder(url, title, meta, category, source_name)
 
     art_id = make_id(url, title)
+
+    # 预过滤:先去掉噪音文本块并截断尾部图片,避免下载无用图片
+    blocks = [b for b in blocks
+              if not (b["type"] in ("p", "h2", "blockquote") and NOISE_RE.search(b.get("text", "")))]
+    _last = -1
+    for _i, _b in enumerate(blocks):
+        if _b["type"] in ("p", "h2", "blockquote"):
+            _last = _i
+    if 0 <= _last < len(blocks) - 1:
+        blocks = blocks[: _last + 1]
+
     print(f"[3/4] 下载图片 → images/articles/ ...")
     cover_src = abs_url(base, meta["image"]) if meta["image"] else ""
     cover_file = ""
