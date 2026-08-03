@@ -239,14 +239,54 @@ section, header, footer{ scroll-margin-top:24px; }
 }
 .intro__left .btn{ margin-top:22px; }
 
-.about__grid{ margin-top:30px; display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; }
-.about__block{ border-top:1px solid var(--line); padding-top:20px; }
-.about__no{ font:italic 400 1.05rem/1 var(--font-latin); letter-spacing:.14em; color:var(--gold); }
-.about__label{ margin-top:10px; font-size:.84rem; letter-spacing:.26em; color:var(--crimson); }
-.about__text{ margin-top:12px; font-size:14.5px; line-height:2; color:var(--ink-soft); text-align:justify; }
-.about__dropcap::first-letter{
-  font-size:3em; float:left; line-height:.92;
-  color:var(--crimson); margin:2px 8px 0 0; font-weight:600;
+.about__grid{ margin-top:36px; display:grid; grid-template-columns:repeat(3, 1fr); gap:34px; }
+.about__block{ border-top:1px solid var(--line); padding-top:24px; }
+.about__no{ font:italic 400 1.2rem/1 var(--font-latin); letter-spacing:.14em; color:var(--gold); }
+.about__label{ margin-top:12px; font-size:.86rem; letter-spacing:.26em; color:var(--crimson); }
+.about__text{ margin-top:14px; font-size:15.5px; line-height:2.15; color:var(--ink-soft); text-align:justify; }
+.about__text strong{ color:var(--crimson); font-weight:600; }
+
+/* 一眼可见的核心卖点数字卡 */
+.intro__stats{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:14px;
+}
+.stat{
+  background:#fff;
+  border:1px solid var(--line);
+  border-top:3px solid var(--crimson);
+  border-radius:6px;
+  padding:18px 8px 16px;
+  text-align:center;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.stat:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(32,30,27,.08); }
+.stat__num{
+  display:block;
+  font:600 1.45rem/1.2 var(--font-serif);
+  color:var(--crimson);
+  letter-spacing:.02em;
+}
+.stat__label{
+  display:block;
+  margin-top:8px;
+  font-size:.74rem; letter-spacing:.12em; color:var(--ink-soft);
+}
+
+/* 技能标签 */
+.intro__tags{
+  margin-top:28px;
+  display:flex; flex-wrap:wrap; gap:10px;
+}
+.tag{
+  padding:8px 18px;
+  font-size:.8rem; letter-spacing:.08em;
+  color:var(--crimson);
+  background:rgba(158,43,37,.06);
+  border:1px solid rgba(158,43,37,.25);
+  border-radius:999px;
 }
 
 /* ============================================================
@@ -558,6 +598,7 @@ section, header, footer{ scroll-margin-top:24px; }
 }
 @media (max-width: 640px){
   .about__grid{ grid-template-columns:1fr; gap:20px; }
+  .intro__stats{ grid-template-columns:repeat(2, 1fr); }
   .sidebar__contact-item .c-ico{ display:none; }
   .modal__head{ padding:24px 22px 4px; }
   .modal__body{ padding:14px 22px 24px; }
