@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# 大媒体文件不入库(部署到 GitHub Pages 需控制体积)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.pptx
+*.docx
+*.pdf
+
+# 抓取脚本的临时下载
+images/tmp/

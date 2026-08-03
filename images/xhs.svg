@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#F7F2E9"/>
+  <rect x="0" y="0" width="600" height="800" fill="none" stroke="#D8CFBE" stroke-width="2"/>
+  <!-- 顶部占位头像 -->
+  <circle cx="300" cy="200" r="70" fill="#EFE7D8" stroke="#B99A5B" stroke-width="2"/>
+  <circle cx="300" cy="182" r="24" fill="#D8CFBE"/>
+  <path d="M 250 280 Q 300 240 350 280 L 350 310 Q 300 280 250 310 Z" fill="#D8CFBE"/>
+  <text x="300" y="345" font-size="26" fill="#201E1B" font-family="serif" text-anchor="middle" letter-spacing="6">小红书主页</text>
+  <!-- 占位文案 -->
+  <rect x="80" y="400" width="200" height="14" rx="7" fill="#D8CFBE"/>
+  <rect x="80" y="430" width="280" height="14" rx="7" fill="#EFE7D8"/>
+  <rect x="80" y="460" width="240" height="14" rx="7" fill="#EFE7D8"/>
+  <rect x="80" y="500" width="440" height="200" fill="#EFE7D8"/>
+  <text x="300" y="590" font-size="18" fill="#5A554D" font-family="serif" text-anchor="middle" letter-spacing="4">截图待补充</text>
+  <text x="300" y="740" font-size="13" fill="#B99A5B" font-family="serif" text-anchor="middle" letter-spacing="4">请将你的小红书主页截图替换此图</text>
+</svg>
