@@ -12,104 +12,147 @@
 </head>
 <body>
 
-  <!-- 噪点颗粒覆盖层 -->
+  <!-- 噪点颗粒覆盖层(电影胶片感) -->
   <div class="grain" aria-hidden="true"></div>
 
-  <!-- 顶部导航 -->
-  <nav class="masthead" aria-label="主导航">
-    <div class="masthead__inner">
-      <a class="masthead__brand" href="#hero">刘晓菲<em>FILM</em></a>
-      <div class="masthead__links">
-        <a href="#about">壹 · 关于我</a>
-        <a href="#xhs">贰 · 小红书</a>
-        <a href="#works">叁 · 文章</a>
-      </div>
-    </div>
-  </nav>
+  <div class="app">
 
-  <!-- 片头 title card -->
-  <header id="hero" class="hero">
-    <div class="letterbox">
-      <div class="bar bar--top" aria-hidden="true"></div>
-      <div class="bar bar--bottom" aria-hidden="true"></div>
-      <div>
-        <h1 class="hero__title">刘晓菲</h1>
-        <p class="hero__sub">新媒体营销 · 影视营销 · 内容创作者</p>
-      </div>
-    </div>
-    <p class="hero__scroll">SCROLL</p>
-  </header>
+    <!-- 左侧固定侧边栏 -->
+    <aside class="sidebar">
+      <a class="sidebar__brand" href="#intro">刘晓菲<em>FILM</em></a>
 
-  <!-- ACT I · 自我介绍 -->
-  <section id="about" class="section">
-    <div class="container">
-      <p class="kicker">ACT I · 关于我</p>
-      <h2 class="section__title">做一个热忱而专业的内容创造者</h2>
-      <div class="about__grid">
-        <div class="about__block">
-          <span class="about__no">01</span>
-          <p class="about__label">方法 · METHOD</p>
-          <p class="about__text about__dropcap">新媒体矩阵搭建方法论:熟悉各个平台玩法,有从 0-1 搭建新媒体矩阵的实操经验,为多个品牌与个人 IP 搭建新媒体矩阵,沉淀出内容营销向业务转化实现的方法论。</p>
-        </div>
-        <div class="about__block">
-          <span class="about__no">02</span>
-          <p class="about__label">协同 · TEAMWORK</p>
-          <p class="about__text">管理与灵活协同经验:有团队管理经验,擅长多任务线管理;有甲方、乙方从业经验,拥有丰富业内资源。</p>
-        </div>
-        <div class="about__block">
-          <span class="about__no">03</span>
-          <p class="about__label">态度 · ATTITUDE</p>
-          <p class="about__text">热情且专业:责任心强,强执行且多创意,坚持用专业输出,并不断学习。</p>
-        </div>
-      </div>
-      <div class="about__foot">
-        <span><b>教育</b> · 广播电视编导方向</span>
-        <span><b>方向</b> · 新媒体矩阵 / 影视营销 / 内容运营</span>
-      </div>
-    </div>
-  </section>
+      <nav class="sidebar__nav" aria-label="栏目导航">
+        <a href="#intro"><span>壹</span>个人介绍</a>
+        <a href="#videos"><span>贰</span>视频作品</a>
+        <a href="#daily"><span>叁</span>日常稿件</a>
+        <a href="#pingyao"><span>肆</span>平遥电影节专题</a>
+      </nav>
 
-  <!-- ACT II · 小红书 -->
-  <section id="xhs" class="section section--deep">
-    <div class="container">
-      <p class="kicker">ACT II · 我的主页</p>
-      <h2 class="section__title">在小红书,持续产出内容</h2>
-      <div class="xhs__layout">
-        <figure class="xhs__card">
-          <div class="xhs__frame">
-            <img id="xhsShot" src="images/xhs.jpg" alt="刘晓菲小红书主页截图">
+      <div class="sidebar__foot">
+        <button class="contact-btn" id="contactBtn" aria-haspopup="dialog">
+          <span class="contact-btn__ico">✉</span>联系我<span class="contact-btn__arrow">→</span>
+        </button>
+        <p class="sidebar__copy">© <span id="year"></span> 刘晓菲</p>
+      </div>
+    </aside>
+
+    <!-- 右侧内容区(单页滚动) -->
+    <main class="main">
+
+      <!-- ACT I · 个人介绍 -->
+      <header id="intro" class="section section--intro">
+        <div class="container">
+          <p class="kicker">ACT I · 个人介绍</p>
+          <div class="intro">
+            <div class="intro__left">
+              <div class="intro__avatar">
+                <img src="images/avatar.svg" alt="刘晓菲">
+              </div>
+              <h1 class="intro__name">刘晓菲</h1>
+              <p class="intro__role">新媒体营销 · 影视营销 · 内容创作者</p>
+              <a class="btn" href="https://xhslink.cn/m/5zyFeZSRHCF" target="_blank" rel="noopener">
+                小红书主页<span class="btn__arrow">→</span>
+              </a>
+            </div>
+            <div class="intro__right">
+              <h2 class="section__title">做一个热忱而专业的内容创造者</h2>
+              <div class="about__grid">
+                <div class="about__block">
+                  <span class="about__no">01</span>
+                  <p class="about__label">方法 · METHOD</p>
+                  <p class="about__text about__dropcap">新媒体矩阵搭建方法论:熟悉各个平台玩法,有从 0-1 搭建新媒体矩阵的实操经验,为多个品牌与个人 IP 搭建新媒体矩阵,沉淀出内容营销向业务转化实现的方法论。</p>
+                </div>
+                <div class="about__block">
+                  <span class="about__no">02</span>
+                  <p class="about__label">协同 · TEAMWORK</p>
+                  <p class="about__text">管理与灵活协同经验:有团队管理经验,擅长多任务线管理;有甲方、乙方从业经验,拥有丰富业内资源。</p>
+                </div>
+                <div class="about__block">
+                  <span class="about__no">03</span>
+                  <p class="about__label">态度 · ATTITUDE</p>
+                  <p class="about__text">热情且专业:责任心强,强执行且多创意,坚持用专业输出,并不断学习。</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <figcaption>小红书主页 · 上下滑动查看</figcaption>
-        </figure>
-        <div class="xhs__aside">
-          <h3>记录电影、内容与生活</h3>
-          <p>这里是我的小红书主页,分享影评、书评、短视频创作笔记与日常思考。如果你也喜欢用文字和影像记录世界,欢迎来坐坐。</p>
-          <a id="xhsLink" class="btn" href="https://xhslink.cn/m/5zyFeZSRHCF" target="_blank" rel="noopener">
-            前往小红书主页查看<span class="btn__arrow">→</span>
-          </a>
         </div>
-      </div>
-    </div>
-  </section>
+      </header>
 
-  <!-- ACT III · 过往文章 -->
-  <section id="works" class="section">
-    <div class="container">
-      <p class="kicker">ACT III · 过往文章</p>
-      <h2 class="section__title">作品与文章</h2>
-      <p class="section__intro">日常稿件与 2019 平遥电影节专题,点击卡片可查看全文。</p>
-      <div id="cardGrid" class="card-grid">
-        <p class="empty">文章整理中,敬请期待。</p>
-      </div>
-    </div>
-  </section>
+      <!-- ACT II · 视频作品 -->
+      <section id="videos" class="section section--deep">
+        <div class="container">
+          <p class="kicker">ACT II · 视频作品</p>
+          <h2 class="section__title">短视频作品</h2>
+          <div id="videoGrid" class="video-grid">
+            <a class="video-card" href="#" target="_blank" rel="noopener">
+              <div class="video-card__cover"><img src="images/video-1.svg" alt="视频作品 1"><span class="video-card__play">▶</span></div>
+              <h3 class="video-card__title">视频作品 1</h3>
+            </a>
+            <a class="video-card" href="#" target="_blank" rel="noopener">
+              <div class="video-card__cover"><img src="images/video-2.svg" alt="视频作品 2"><span class="video-card__play">▶</span></div>
+              <h3 class="video-card__title">视频作品 2</h3>
+            </a>
+            <a class="video-card" href="#" target="_blank" rel="noopener">
+              <div class="video-card__cover"><img src="images/video-3.svg" alt="视频作品 3"><span class="video-card__play">▶</span></div>
+              <h3 class="video-card__title">视频作品 3</h3>
+            </a>
+            <a class="video-card" href="#" target="_blank" rel="noopener">
+              <div class="video-card__cover"><img src="images/video-4.svg" alt="视频作品 4"><span class="video-card__play">▶</span></div>
+              <h3 class="video-card__title">视频作品 4</h3>
+            </a>
+          </div>
+        </div>
+      </section>
 
-  <!-- 片尾 credits -->
-  <footer class="credits">
-    <p class="credits__theend">THE END</p>
-    <p class="credits__line">策划 / 文案 / 摄影 —— 刘晓菲</p>
-    <p class="credits__copy">© <span id="year"></span> 刘晓菲 · 用电影的方式,记录每一次表达</p>
-  </footer>
+      <!-- ACT III · 日常稿件 -->
+      <section id="daily" class="section">
+        <div class="container">
+          <p class="kicker">ACT III · 日常稿件</p>
+          <h2 class="section__title">日常稿件</h2>
+          <div id="dailyGrid" class="card-grid"></div>
+        </div>
+      </section>
+
+      <!-- ACT IV · 平遥电影节专题 -->
+      <section id="pingyao" class="section section--deep">
+        <div class="container">
+          <p class="kicker">ACT IV · 平遥电影节专题</p>
+          <h2 class="section__title">平遥电影节专题</h2>
+          <div id="pingyaoGrid" class="card-grid"></div>
+        </div>
+      </section>
+
+      <!-- 片尾 credits -->
+      <footer class="credits">
+        <p class="credits__theend">THE END</p>
+        <p class="credits__line">策划 / 文案 / 摄影 —— 刘晓菲</p>
+        <p class="credits__copy">© <span id="yearFoot"></span> 刘晓菲 · 用电影的方式,记录每一次表达</p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- 联系我 · 名片弹层 -->
+  <div class="bcard" id="bcard" hidden>
+    <div class="bcard__scrim" data-close-card></div>
+    <div class="bcard__panel" role="dialog" aria-modal="true" aria-label="联系方式">
+      <button class="bcard__close" data-close-card aria-label="关闭">×</button>
+      <div class="bcard__head">
+        <p class="bcard__name">刘晓菲</p>
+        <p class="bcard__role">新媒体营销 · 影视营销 · 内容创作者</p>
+      </div>
+      <div class="bcard__rule"></div>
+      <a class="bcard__row" href="tel:18614025876">
+        <span class="bcard__ico">☎</span>
+        <span class="bcard__text">18614025876</span>
+      </a>
+      <a class="bcard__row" href="mailto:mofanshengfei@126.com">
+        <span class="bcard__ico">✉</span>
+        <span class="bcard__text">mofanshengfei@126.com</span>
+      </a>
+      <p class="bcard__foot">点击电话或邮箱即可直接联系</p>
+    </div>
+  </div>
 
   <!-- 文章全文模态框 -->
   <div class="modal" id="articleModal" hidden>

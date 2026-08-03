@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#201E1B"/>
+      <stop offset="1" stop-color="#5A3A2B"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect x="0" y="0" width="800" height="3" fill="#B99A5B" opacity="0.7"/>
+  <rect x="0" y="497" width="800" height="3" fill="#B99A5B" opacity="0.7"/>
+  <rect x="150" y="80" width="500" height="340" fill="none" stroke="#F7F2E9" stroke-width="2" opacity="0.8"/>
+  <circle cx="400" cy="250" r="52" fill="#9E2B25" opacity="0.9"/>
+  <path d="M 386 228 L 386 272 L 424 250 Z" fill="#F7F2E9"/>
+  <text x="400" y="180" font-size="30" fill="#F7F2E9" font-family="serif" text-anchor="middle" letter-spacing="8">视频作品 2</text>
+  <text x="400" y="440" font-size="13" fill="#5A554D" font-family="serif" text-anchor="middle" letter-spacing="4">等待填入视频链接</text>
+</svg>
