@@ -32,10 +32,11 @@
       '<article class="card" tabindex="0" role="button" data-id="' + esc(a.id) + '" aria-label="查看全文:' + esc(a.title) + '">' +
         '<div class="card__cover"><img src="' + esc(cover.src || PLACEHOLDER) + '" alt="' + esc(cover.alt || a.title || '') + '" loading="lazy"></div>' +
         '<div class="card__body">' +
-          '<div class="card__meta"><span class="card__tag">' + esc(a.category || '文章') + '</span><time>' + esc(a.date || '') + '</time></div>' +
           '<h3 class="card__title">' + esc(a.title) + '</h3>' +
-          '<p class="card__excerpt">' + esc(a.excerpt || '') + '</p>' +
-          '<span class="card__more">READ MORE →</span>' +
+          '<div class="card__meta">' +
+            '<span class="card__tag">' + esc(a.category || '文章') + '</span>' +
+            '<time>' + esc(a.date || '') + '</time>' +
+          '</div>' +
         '</div>' +
       '</article>'
     );
